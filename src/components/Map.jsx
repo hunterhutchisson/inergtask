@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import ReactMapGL, {Marker, Popup} from 'react-map-gl';
 import Plot from 'react-plotly.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const Map = ({stateObj}) => {
@@ -53,10 +54,10 @@ const Map = ({stateObj}) => {
                 ?
                 <>
                 <Marker latitude={stateObj.coordinates.latitude} longitude={stateObj.coordinates.longitude}>
-                    <button onClick={(e) => {
+                    <button className="btn-size" onClick={(e) => {
               e.preventDefault();
               setShowInfo(!showInfo)
-            }}></button>
+            }}><FontAwesomeIcon icon="syringe" className="icon-size" /></button>
                 </Marker>
                 </>
                 :
@@ -64,7 +65,7 @@ const Map = ({stateObj}) => {
                     {stateData.map(state=>{
                         return(
                         <Marker latitude={state.coordinates.latitude} longitude={state.coordinates.longitude}>
-                            <button onClick={(e) => {
+                            <button className="btn-size" onClick={(e) => {
                                 e.preventDefault();
                                 setShowInfo(!showInfo)
                                 setIndividualShow(state)
@@ -78,7 +79,7 @@ const Map = ({stateObj}) => {
                                     height: 300,
                                     title: `${state.state} covid cases`
                                 })
-                            }}></button>
+                            }}><FontAwesomeIcon icon="syringe" className="icon-size"/></button>
                         </Marker>
                         )
                     })}
