@@ -1,13 +1,10 @@
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux';
-import Plot from 'react-plotly.js';
-import Map from './Map';
 import { selectState } from '../actions'
 
 
 const SelectState = () => {
     const dispatch = useDispatch();
-    const usData = useSelector(state => state.covidData.usData)
     const stateData = useSelector(state => state.covidData.stateData)
     const [selectedState, setSelectedState] = useState(null)
 

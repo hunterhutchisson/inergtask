@@ -1,5 +1,5 @@
 
-import { INCREMENT, LOAD_DATA, SELECT_STATE } from "./types"
+import { LOAD_DATA, SELECT_STATE } from "./types"
 import axios from 'axios'
 
 export const loadData = () => async dispatch => {

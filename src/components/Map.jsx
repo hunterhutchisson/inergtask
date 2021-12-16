@@ -55,9 +55,10 @@ const Map = ({stateObj}) => {
                 <>
                 <Marker latitude={stateObj.coordinates.latitude} longitude={stateObj.coordinates.longitude}>
                     <button className="btn-size" onClick={(e) => {
-              e.preventDefault();
-              setShowInfo(!showInfo)
-            }}><FontAwesomeIcon icon="syringe" className="icon-size" /></button>
+                        e.preventDefault();
+                        setShowInfo(!showInfo)
+                        }}><FontAwesomeIcon icon="syringe" className="icon-size" />
+                    </button>
                 </Marker>
                 </>
                 :
@@ -85,7 +86,6 @@ const Map = ({stateObj}) => {
                     })}
                 </>
                 }
-
 
                 {(showInfo && stateObj)
                 ? 
