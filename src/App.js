@@ -66,10 +66,13 @@ function App() {
                     }]} 
                     layout={{
                       title: `${chosenState.state} Covid Breakdown`,
+                      font: {
+                        color: "white"
+                      },
                       annotations: [
                           {
                               font: {
-                              size: 8
+                              size: 8,
                               },
                               showarrow: false,
                               text: `${chosenState.state} Covid Cases`,
@@ -78,7 +81,7 @@ function App() {
                           },
                           {
                               font: {
-                              size: 8
+                              size: 8,
                               },
                               showarrow: false,
                               text: `vs Rest of the US`,
