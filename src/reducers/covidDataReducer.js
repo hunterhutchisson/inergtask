@@ -1,4 +1,4 @@
-import { LOAD_DATA, SELECT_STATE } from "../actions/types"
+import { LOAD_DATA, SELECT_STATE, VIEW_THEME } from "../actions/types"
 import * as  stateCoordList from '../assets/data.json';
 
 
@@ -6,6 +6,7 @@ const initialState = {
     usData: {},
     stateData: [],
     chosenState: null,
+    viewTheme: "day"
 }
 
 const covidDataReducer = (state=initialState, action) => {
@@ -26,6 +27,11 @@ const covidDataReducer = (state=initialState, action) => {
             return{
                 ...state,
                 chosenState: action.data
+            }
+        case VIEW_THEME:
+            return{
+                ...state,
+                viewTheme: action.data
             }
         default:
             return state

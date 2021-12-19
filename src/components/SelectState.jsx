@@ -17,17 +17,24 @@ const SelectState = () => {
         dispatch(selectState(null))
     }
     return (
-        <>
-        <select defaultValue={selectedState} onChange={handleSelectState}>
-          <option hidden value="defaultValue">Pick a State</option>
-          {stateData.map(state => {
-            return <option key={state.state} value={state.state}>{state.state}</option>
-          })}
-        </select>
-
-          <button onClick={handleResetState}>Reset</button>
-        
-        </>
+      <>
+      <div className='row'>
+        <div className='col-12'>
+      <h1>State Breakdowns</h1>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-12'>
+      <select defaultValue={selectedState} onChange={handleSelectState}>
+        <option hidden value="defaultValue">Pick a State</option>
+        {stateData.map(state => {
+          return <option key={state.state} value={state.state}>{state.state}</option>
+        })}
+      </select>
+      <button onClick={handleResetState}>Reset</button>
+        </div>
+      </div>
+      </>
     )
 }
 

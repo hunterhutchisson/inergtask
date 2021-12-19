@@ -1,5 +1,5 @@
 
-import { LOAD_DATA, SELECT_STATE } from "./types"
+import { LOAD_DATA, SELECT_STATE, VIEW_THEME } from "./types"
 import axios from 'axios'
 
 export const loadData = () => async dispatch => {
@@ -22,6 +22,13 @@ export const selectState = (state) => {
     return {
         type: SELECT_STATE,
         data: state
+    }
+}
+
+export const selectViewTheme = (theme) => {
+    return {
+        type: VIEW_THEME,
+        data: theme
     }
 }
 

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Map = ({stateObj}) => {
     const stateData = useSelector(state => state.covidData.stateData)
-
+    const viewTheme = useSelector(state => state.covidData.viewTheme)
     const [dataForBar, setDataForBar] = useState(stateObj ? [{
         y: [stateObj.positive, stateObj.hospitalizedCurrently, (stateObj.positive-stateObj.hospitalizedCurrently-stateObj.death),stateObj.death],
         x: ['Total Cases', 'Active Cases', 'Recovered','Deaths'],
@@ -22,18 +22,17 @@ const Map = ({stateObj}) => {
     const [viewport, setViewport] = useState({
         longitude:-97,
         latitude:40,
-        width: "800px",
-        height: "500px",
+        width: "100%",
+        height: "700px",
         zoom: 3
     })
 
-    const [showInfo, setShowInfo] = useState(false)
     const [individualShow, setIndividualShow] = useState(null)
 
     useEffect(() => {
         const listener = (e) => {
             if(e.key === "Escape"){
-                setShowInfo(false)
+                setIndividualShow(null)
             }
         }
         window.addEventListener("keydown", listener)
@@ -44,8 +43,8 @@ const Map = ({stateObj}) => {
     return (
         <>
             <ReactMapGL {...viewport} 
-            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN} 
-            mapStyle='mapbox://styles/hunterhutch/ckwjv9etg27z614r7bdgamfwl'
+            mapboxApiAccessToken="pk.eyJ1IjoiaHVudGVyaHV0Y2giLCJhIjoiY2t3anVreTA4MWxzMTJwcHd4cnRtY3ZkbyJ9.QOq8G9tShJdU1j_q26-tMg" 
+            mapStyle={(viewTheme === "night") ? 'mapbox://styles/hunterhutch/ckwjv9etg27z614r7bdgamfwl':'mapbox://styles/hunterhutch/ckxctvmvk1dsc14okoj98g9ev'}
             onViewportChange={viewport => {
                 setViewport(viewport)
             }}
@@ -56,19 +55,28 @@ const Map = ({stateObj}) => {
                 <Marker latitude={stateObj.coordinates.latitude} longitude={stateObj.coordinates.longitude}>
                     <button className="btn-size" onClick={(e) => {
                         e.preventDefault();
-                        setShowInfo(!showInfo)
+                        setIndividualShow(stateObj)
+                                setDataForBar([{
+                                    y: [stateObj.positive, stateObj.hospitalizedCurrently, (stateObj.positive-stateObj.hospitalizedCurrently-stateObj.death),stateObj.death],
+                                    x: ['Total Cases', 'Active Cases', 'Recovered','Deaths'],
+                                    type: 'bar'
+                                }])
+                                setLayoutForBar({
+                                    width: 400,
+                                    height: 300,
+                                    title: `${stateObj.state} covid cases`
+                                })
                         }}><FontAwesomeIcon icon="syringe" className="icon-size" />
                     </button>
                 </Marker>
                 </>
                 :
                 <>
-                    {stateData.map(state=>{
+                    {stateData.map((state, index)=>{
                         return(
-                        <Marker latitude={state.coordinates.latitude} longitude={state.coordinates.longitude}>
+                        <Marker key={index} latitude={state.coordinates.latitude} longitude={state.coordinates.longitude}>
                             <button className="btn-size" onClick={(e) => {
                                 e.preventDefault();
-                                setShowInfo(!showInfo)
                                 setIndividualShow(state)
                                 setDataForBar([{
                                     y: [state.positive, state.hospitalizedCurrently, (state.positive-state.hospitalizedCurrently-state.death),state.death],
@@ -87,23 +95,12 @@ const Map = ({stateObj}) => {
                 </>
                 }
 
-                {(showInfo && stateObj)
-                ? 
-                <Popup latitude={stateObj.coordinates.latitude} 
-                longitude={stateObj.coordinates.longitude}
-                onClose={()=>{
-                    setShowInfo(false)
-                }}
-                >
-                    <Plot data={dataForBar} layout={layoutForBar} />
-                </Popup>
-                :null}
-                {(showInfo && individualShow)
+                {(individualShow)
                 ? 
                 <Popup latitude={individualShow.coordinates.latitude} 
                 longitude={individualShow.coordinates.longitude}
                 onClose={()=>{
-                    setShowInfo(false)
+                    // setShowInfo(false)
                     setIndividualShow(null)
                 }}
                 >
